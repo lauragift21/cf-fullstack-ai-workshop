@@ -1,6 +1,6 @@
 # 🚀 DevDocsBot – AI-Powered Doc Assistant with Cloudflare
 
-This is the companion project for the **"Full-Stack AI Development with Cloudflare"** workshop. In this session, you'll build a Retrieval-Augmented Generation (RAG) app using Cloudflare Workers, Workers AI, AI Gateway, Vectorize, and D1.
+This is the companion project for the **Full-Stack AI Development with Cloudflare** workshop. In this session, you'll build a Retrieval-Augmented Generation (RAG) app using Cloudflare Workers, Workers AI, AI Gateway, Vectorize, and D1.
 
 ---
 
@@ -14,7 +14,6 @@ This is the companion project for the **"Full-Stack AI Development with Cloudfla
 - How to run semantic search and generate answers (RAG pattern)
 - Bonus: Cloudflare Workflows, KV, Queues, and R2
 
----
 
 ## 🛠️ Prerequisites
 
@@ -27,8 +26,6 @@ This is the companion project for the **"Full-Stack AI Development with Cloudfla
 npm install -g wrangler
 ````
 
----
-
 ## 🏗️ Project Setup
 
 Clone the repo and install dependencies:
@@ -38,8 +35,6 @@ git clone https://github.com/your-username/devdocsbot-workshop.git
 cd devdocsbot-workshop
 npm install
 ```
-
----
 
 ## 🚀 Running Locally
 
@@ -51,7 +46,6 @@ wrangler dev
 
 Test your endpoints (e.g., `/generate`, `/search`, `/ask`).
 
----
 
 ## 🔐 Environment Variables
 
@@ -61,7 +55,6 @@ Create a `.dev.vars` file for local development:
 AI_GATEWAY_API_KEY=your-openai-or-anthropic-key
 ```
 
----
 
 ## 🧪 Key Endpoints
 
@@ -69,7 +62,6 @@ AI_GATEWAY_API_KEY=your-openai-or-anthropic-key
 * `POST /search` – Query Vectorize index
 * `POST /ask` – Full RAG response (Vector search + LLM)
 
----
 
 ## 📦 Deployment
 
@@ -79,7 +71,6 @@ Deploy to Cloudflare:
 wrangler deploy
 ```
 
----
 
 ## 💡 Extra Credit
 
@@ -88,7 +79,6 @@ wrangler deploy
 * Schedule re-embedding with Cloudflare Workflows
 * Add a UI using Cloudflare Pages
 
----
 
 ## 🧭 Resources
 
