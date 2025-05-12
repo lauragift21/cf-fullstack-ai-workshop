@@ -1,19 +1,22 @@
-# 🚀 DevDocsBot – AI-Powered Doc Assistant with Cloudflare
+# 🤖 DevDocs Assistant – Full-Stack AI with Cloudflare
 
-This is the companion project for the **Full-Stack AI Development with Cloudflare** workshop. In this session, you'll build a Retrieval-Augmented Generation (RAG) app using Cloudflare Workers, Workers AI, AI Gateway, Vectorize, and D1.
+A hands-on workshop on building a Retrieval-Augmented Generation (RAG) application using Cloudflare Workers, Vectorize, D1, and Workers AI.
 
 ---
 
-## 📚 What You'll Learn
+In this workshop, you’ll build **DevDocs Assistant** — an AI-powered doc assistant that retrieves information from developer documentation and answers questions using natural language.
 
-- How to create and deploy a Cloudflare Worker
-- How to integrate Workers AI for local inference
-- How to use AI Gateway to call external LLMs
-- How to embed and store documents in Vectorize
-- How to manage metadata with D1
-- How to run semantic search and generate answers (RAG pattern)
-- Bonus: Cloudflare Workflows, KV, Queues, and R2
+Through this hands-on project, you will:
 
+- Create and deploy a Cloudflare Worker
+- Add AI capabilities with Workers AI and AI Gateway
+- Embed and search documents using Vectorize
+- Store and retrieve metadata using D1
+- Build a working Retrieval-Augmented Generation (RAG) app from scratch
+
+🖼️ Slides – [Link to your workshop slides] (optional)
+
+---
 
 ## 🛠️ Prerequisites
 
@@ -26,13 +29,15 @@ This is the companion project for the **Full-Stack AI Development with Cloudflar
 npm install -g wrangler
 ````
 
+---
+
 ## 🏗️ Project Setup
 
 Clone the repo and install dependencies:
 
 ```bash
-git clone https://github.com/your-username/devdocsbot-workshop.git
-cd devdocsbot-workshop
+git clone https://github.com/lauragift21/cf-fullstack-ai-workshop.git
+cd cf-fullstack-ai-workshop
 npm install
 ```
 
@@ -44,9 +49,6 @@ Start the dev server:
 wrangler dev
 ```
 
-Test your endpoints (e.g., `/generate`, `/search`, `/ask`).
-
-
 ## 🔐 Environment Variables
 
 Create a `.dev.vars` file for local development:
@@ -55,14 +57,6 @@ Create a `.dev.vars` file for local development:
 AI_GATEWAY_API_KEY=your-openai-or-anthropic-key
 ```
 
-
-## 🧪 Key Endpoints
-
-* `POST /generate` – Run LLM with prompt (Workers AI)
-* `POST /search` – Query Vectorize index
-* `POST /ask` – Full RAG response (Vector search + LLM)
-
-
 ## 📦 Deployment
 
 Deploy to Cloudflare:
@@ -70,7 +64,17 @@ Deploy to Cloudflare:
 ```bash
 wrangler deploy
 ```
+---
 
+## 📦 Workshop Contents
+
+- [🧱 Part 1: Cloudflare Workers Basics](./part-1.md)
+- [🔗 Part 2: Integrating Hono Framework](./part-2.md)
+- [🧠 Part 3: Add AI Capabilities](./part-3.md)
+- [🔍 Part 4: Build a RAG Pipeline](./part-4.md)
+- [🚀 Part 5: Bonus Enhancements](./part-5.md)
+
+---
 
 ## 💡 Extra Credit
 
@@ -85,4 +89,3 @@ wrangler deploy
 * [Vectorize](https://developers.cloudflare.com/vectorize/)
 * [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/)
 * [Cloudflare D1](https://developers.cloudflare.com/d1/)
-
