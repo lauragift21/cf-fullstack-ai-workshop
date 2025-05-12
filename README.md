@@ -75,9 +75,8 @@ wrangler deploy
 ## 💡 Extra Credit
 
 * Add Workers KV to cache responses
-* Use R2 for file uploads and embedding
-* Schedule re-embedding with Cloudflare Workflows
-* Add a UI using Cloudflare Pages
+* Integrate external models (Anthropic/OpenAI)
+* Deploy to a production domain
 
 
 ## 🧭 Resources
