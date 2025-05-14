@@ -5,9 +5,6 @@
 
 ## 🛠️ Optional Add-Ons
 
-1. **Integrate Cloudflare Workflows:**
-Automate embedding, file handling, or scheduled tasks.
-
 2. **Add caching with Workers KV:**
 Store frequent queries and LLM responses to speed up retrieval.
 
