@@ -30,22 +30,25 @@ Update your Hono app to include a simple /api/chat route:
 
 ```ts
 app.post('/api/chat', async (c) => {
-	const ai = c.env.AI;
-	const { message } = await c.req.json();
+  const ai = c.env.AI;
+  const { message } = await c.req.json();
 
-	try {
-		const response = await ai.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
-			messages: [
-				{ role: 'system', content: 'You are a helpful assistant' },
-				{ role: 'user', content: message },
-			],
-			});
+  try {
+    const response = await ai.run(
+      '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+      {
+        messages: [
+          { role: 'system', content: 'You are a helpful assistant.' },
+          { role: 'user', content: message },
+        ],
+      }
+    );
 
-		return c.json({ message: response.response });
-	} catch (error) {
-		console.error('AI Error:', error);
-		return c.json({ error: 'Failed to generate response' }, 500);
-	}
+    return c.json({ message: response.response });
+  } catch (error) {
+    console.error('AI Error:', error);
+    return c.json({ error: 'Failed to generate response' }, 500);
+  }
 });
 ```
 
@@ -90,19 +93,19 @@ Then, in your Worker code, pass the Gateway ID as part of the `run()` call like 
 
 ```ts
 const response = await ai.run(
-	'@cf/meta/llama-3.3-70b-instruct-fp8-fast',
-	{
-		messages: [
-			{ role: 'system', content: 'You are a helpful assistant.' },
-			{ role: 'user', content: message },
-		],
-	},
-	{
-		gateway: {
-			id: 'cf-gateway', // Replace with your actual Gateway ID
-			skipCache: true, // Optional: disables response caching
-		},
-	}
+  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+  {
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: message },
+    ],
+  },
+  {
+    gateway: {
+      id: 'cf-gateway',       // Replace with your Gateway ID
+      skipCache: true         // Optional: disables caching
+    }
+  }
 );
 ```
 
