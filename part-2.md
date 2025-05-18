@@ -25,7 +25,16 @@ export default app;
 
 3. **Run the app locally and test:**
 ```bash
-wrangler dev
+npm run dev
+```
+
+<!-- TODO: Add docs to serve public directory with assets -->
+
+```json
+"assets": {
+		"directory": "./public",
+		"binding": "ASSETS",
+	}
 ```
 
 4. **Visit `localhost:8787` to test your Hono route**

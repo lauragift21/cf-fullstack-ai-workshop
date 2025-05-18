@@ -1,10 +1,10 @@
-# 🤖 DevDocs Assistant – Full-Stack AI with Cloudflare
+# 🧠 KnowledgeBase Assistant: Full-Stack AI App with Cloudflare
 
 A hands-on workshop on building a Retrieval-Augmented Generation (RAG) application using Cloudflare Workers, Vectorize, D1, and Workers AI.
 
 ---
 
-In this workshop, you’ll build **DevDocs Assistant** — an AI-powered doc assistant that retrieves information from developer documentation and answers questions using natural language.
+In this workshop, you’ll build a **KnowledgeBase Assistant** — a RAG-powered AI app that lets users upload content, ask questions about it, and receive context-aware answers grounded in their own documents.
 
 Through this hands-on project, you will:
 

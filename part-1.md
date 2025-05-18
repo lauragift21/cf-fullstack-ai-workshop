@@ -1,4 +1,4 @@
-# 🧱 Part 1: Cloudflare Workers Basics
+# ✨ Part 1: Cloudflare Workers Basics
 
 ## ✅ Goals
 - Set up your first Cloudflare Worker
@@ -11,6 +11,13 @@
 ```bash
 npm create cloudflare@latest devdocs-assistant
 cd devdocs-assistant
+```
+
+> We already have a GitHub project to work with so let's clone that instead:
+
+```bash
+git clone https://github.com/lauragift21/cf-fullstack-ai-workshop.git
+cd cf-fullstack-ai-workshop
 ```
 
 2. **Install dependencies:**

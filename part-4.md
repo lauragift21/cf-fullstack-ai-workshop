@@ -1,4 +1,4 @@
-# 🔍 Part 4: Build a RAG Pipeline
+# Part 4: Build a RAG Pipeline
 
 ## ✅ Goals
 - Store and search document embeddings using Vectorize

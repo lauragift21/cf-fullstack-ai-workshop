@@ -1,4 +1,4 @@
-{
+ {
 	"name": "cf-fullstack-ai-workshop",
 	"version": "0.0.0",
 	"private": true,
@@ -15,5 +15,8 @@
 		"typescript": "^5.5.2",
 		"vitest": "~3.0.7",
 		"wrangler": "^4.14.2"
+	},
+	"dependencies": {
+		"hono": "^4.7.10"
 	}
 }

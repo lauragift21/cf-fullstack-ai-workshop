@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KnowledgeBase Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <h1>KnowledgeBase Assistant</h1>
+      <p>Upload documents and chat with your knowledge base</p>
+    </header>
+
+    <div class="main-content">
+      <div class="sidebar">
+        <div class="upload-section">
+          <h2>Add Knowledge</h2>
+          <form id="upload-form">
+            <input type="file" id="document-upload" multiple>
+            <button type="submit">Upload</button>
+          </form>
+          <div class="documents-list">
+            <h3>Your Documents</h3>
+            <ul id="documents"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-container">
+        <div id="chat-messages" class="messages"></div>
+        <form id="chat-form" class="chat-input">
+          <input type="text" id="user-input" placeholder="Ask a question about your documents...">
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,18 +1,25 @@
-/**
- * Welcome to Cloudflare Workers! This is your first worker.
- *
- * - Run `npm run dev` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `npm run deploy` to publish your worker
- *
- * Bind resources to your worker in `wrangler.jsonc`. After adding bindings, a type definition for the
- * `Env` object can be regenerated with `npm run cf-typegen`.
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
+import { Hono } from 'hono';
 
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		return new Response('Hello World!');
-	},
-} satisfies ExportedHandler<Env>;
+const app = new Hono<{ Bindings: Env }>();
+
+app.post('/api/documents', async (c) => {
+	// Document upload handling - will implement later
+	return c.json({ success: true, message: 'Document received' });
+});
+
+app.post('/api/chat', async (c) => {
+	const { message } = await c.req.json();
+
+	try {
+		const response = await c.env.AI.run('@cf/meta/llama-3-8b-instruct', {
+			messages: [{ role: 'user', content: message }],
+		});
+
+		return c.json({ message: response.response });
+	} catch (error) {
+		console.error('AI Error:', error);
+		return c.json({ error: 'Failed to generate response' }, 500);
+	}
+});
+
+export default app;
