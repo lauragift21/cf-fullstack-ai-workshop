@@ -1,4 +1,4 @@
-# Part 3: Add AI Capabilities
+# 🧠 Part 3: Add AI Capabilities
 
 ## ✅ Goals
 
@@ -6,8 +6,7 @@
 
 - Create a `/api/chat`endpoint that accepts user input and responds with AI-generated content
 
-- Learn how to use AI Gateway to call models (e.g., OpenAI or Anthropic)
-
+- Learn how to set up AI Gateway
 
 ## 🛠️ Instructions
 
@@ -22,6 +21,7 @@ Add the `[ai]` binding if it's not already there:
 	}
 }
 ```
+
 This makes `c.env.AI` available in your Worker.
 
 ### 2. **Add a basic chat endpoint**
@@ -31,7 +31,6 @@ Update your Hono app to include a simple /api/chat route:
 ```ts
 app.post('/api/chat', async (c) => {
 	const ai = c.env.AI;
-
 	const { message } = await c.req.json();
 
 	try {
@@ -40,7 +39,7 @@ app.post('/api/chat', async (c) => {
 				{ role: 'system', content: 'You are a helpful assistant' },
 				{ role: 'user', content: message },
 			],
-		});
+			});
 
 		return c.json({ message: response.response });
 	} catch (error) {
@@ -51,37 +50,37 @@ app.post('/api/chat', async (c) => {
 ```
 
 ### 3. **Connect your frontend to the `/api/chat` route**
+
 In `public/app.js`, update your form handler:
 
 ```ts
 chatForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const message = userInput.value.trim();
-  if (!message) return;
+	e.preventDefault();
+	const message = userInput.value.trim();
+	if (!message) return;
 
-  addMessage(message, 'user');
-  userInput.value = '';
+	addMessage(message, 'user');
+	userInput.value = '';
 
-  const typingEl = addMessage('Assistant is thinking...', 'assistant', true);
+	const typingEl = addMessage('Assistant is thinking...', 'assistant', true);
 
-  try {
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message })
-    });
+	try {
+		const response = await fetch('/api/chat', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ message }),
+		});
 
-    const data = await response.json();
-    typingEl.textContent = data.message;
-
-  } catch (err) {
-    console.error(err);
-    typingEl.textContent = '⚠️ Error generating response.';
-  }
+		const data = await response.json();
+		typingEl.textContent = data.message;
+	} catch (err) {
+		console.error(err);
+		typingEl.textContent = '⚠️ Error generating response.';
+	}
 });
 ```
-This will display the AI's response in the chat interface after a short delay.
 
+This will display the AI's response in the chat interface after a short delay.
 
 ### 4. **Set Up AI Gateway**
 
@@ -91,19 +90,19 @@ Then, in your Worker code, pass the Gateway ID as part of the `run()` call like 
 
 ```ts
 const response = await ai.run(
-  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
-  {
-    messages: [
-      { role: 'system', content: 'You are a helpful assistant.' },
-      { role: 'user', content: message },
-    ],
-  },
-  {
-    gateway: {
-      id: 'cf-gateway', // Replace with your actual Gateway ID
-      skipCache: true   // Optional: disables response caching
-    }
-  }
+	'@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+	{
+		messages: [
+			{ role: 'system', content: 'You are a helpful assistant.' },
+			{ role: 'user', content: message },
+		],
+	},
+	{
+		gateway: {
+			id: 'cf-gateway', // Replace with your actual Gateway ID
+			skipCache: true, // Optional: disables response caching
+		},
+	}
 );
 ```
 
