@@ -7,33 +7,35 @@
 
 ## 🛠️ Instructions
 
-1. **Initialize your Worker project:**
-```bash
-npm create cloudflare@latest devdocs-assistant
-cd devdocs-assistant
-```
+### 1. **Clone the workshop project**
 
-> We already have a GitHub project to work with so let's clone that instead:
+> Instead of starting from scratch, we'll use the pre-configured workshop repository:
 
 ```bash
 git clone https://github.com/lauragift21/cf-fullstack-ai-workshop.git
 cd cf-fullstack-ai-workshop
 ```
 
-2. **Install dependencies:**
+### 2. **Install dependencies:**
 ```bash
 npm install
 ```
 
-3. **Run the app locally:**
+### 3. **Run the app locally:**
 ```bash
 wrangler dev
 ```
+> This runs your Worker in a local dev environment and watches for changes.
 
-4. **Deploy your app:**
+### 4. **Deploy your app:**
 ```bash
 wrangler deploy
 ```
 
-5. **Explore the project structure and `wrangler.toml` config**
+### 5. **Explore the project structure and `wrangler.toml` config**
 
+- Look through the src/index.ts file to understand how routing works with Hono
+
+- Review wrangler.toml to see how environment bindings (like AI, D1, Vectorize) are configured
+
+- Check the public/ folder for frontend assets (HTML, CSS, JS)

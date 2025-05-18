@@ -1,5 +1,9 @@
 import { Hono } from 'hono';
 
+type Env = {
+	AI: Ai
+}
+
 const app = new Hono<{ Bindings: Env }>();
 
 app.post('/api/documents', async (c) => {
@@ -8,12 +12,26 @@ app.post('/api/documents', async (c) => {
 });
 
 app.post('/api/chat', async (c) => {
+	const ai = c.env.AI;
+
 	const { message } = await c.req.json();
 
 	try {
-		const response = await c.env.AI.run('@cf/meta/llama-3-8b-instruct', {
-			messages: [{ role: 'user', content: message }],
-		});
+		const response = await ai.run(
+			'@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+			{
+				messages: [
+					{ role: 'system', content: 'You are a helpful assistant' },
+					{ role: 'user', content: message },
+				],
+			},
+			{
+				gateway: {
+					id: 'cf-gateway',
+					skipCache: true, // Optional: Skip cache if needed
+				},
+			}
+		);
 
 		return c.json({ message: response.response });
 	} catch (error) {

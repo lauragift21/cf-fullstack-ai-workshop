@@ -2,11 +2,18 @@
 
 ## ✅ Goals
 
-- Integrate Workers AI and AI Gateway for LLM inference
+- Integrate Workers AI for text generation
+
+- Create a `/api/chat`endpoint that accepts user input and responds with AI-generated content
+
+- Learn how to use AI Gateway to call models (e.g., OpenAI or Anthropic)
+
 
 ## 🛠️ Instructions
 
-1. To start using Cloudflare AI in your app, you first need to add the `ai` binding to the wrangler configuration file. this will set up a binding to Cloudflare's AI models in your code so you cab uses it to interact with the AI models on the platform.
+### 1. **Update wrangler.toml to enable Workers AI**
+
+Add the `[ai]` binding if it's not already there:
 
 ```json
 {
@@ -15,45 +22,89 @@
 	}
 }
 ```
+This makes `c.env.AI` available in your Worker.
 
-2. Now you can use the Workers AI built-in model:
+### 2. **Add a basic chat endpoint**
 
-Use `@cf/meta/llama-3.1-8b-instruct-fast` to run a basic text generation task.
+Update your Hono app to include a simple /api/chat route:
 
 ```ts
 app.post('/api/chat', async (c) => {
+	const ai = c.env.AI;
+
 	const { message } = await c.req.json();
 
 	try {
-		const response = await c.env.AI.run('@cf/meta/llama-3-8b-instruct', {
-			messages: [{ role: 'user', content: message }],
+		const response = await ai.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
+			messages: [
+				{ role: 'system', content: 'You are a helpful assistant' },
+				{ role: 'user', content: message },
+			],
 		});
-
-		console.log(response)
 
 		return c.json({ message: response.response });
 	} catch (error) {
-		console.error('AI Error, error');
+		console.error('AI Error:', error);
 		return c.json({ error: 'Failed to generate response' }, 500);
 	}
 });
 ```
 
-3. Set up AI Gateway:
+### 3. **Connect your frontend to the `/api/chat` route**
+In `public/app.js`, update your form handler:
 
-To set up AI Gateway, [create an API Token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) with the following permissions:
+```ts
+chatForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const message = userInput.value.trim();
+  if (!message) return;
 
+  addMessage(message, 'user');
+  userInput.value = '';
+
+  const typingEl = addMessage('Assistant is thinking...', 'assistant', true);
+
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    });
+
+    const data = await response.json();
+    typingEl.textContent = data.message;
+
+  } catch (err) {
+    console.error(err);
+    typingEl.textContent = '⚠️ Error generating response.';
+  }
+});
 ```
-AI Gateway - Read
-AI Gateway - Edit
+This will display the AI's response in the chat interface after a short delay.
+
+
+### 4. **Set Up AI Gateway**
+
+Go to the [Cloudflare Dashboard → AI Gateway](https://dash.cloudflare.com/) and create a new Gateway. Give it a name like `cf-gateway`.
+
+Then, in your Worker code, pass the Gateway ID as part of the `run()` call like this:
+
+```ts
+const response = await ai.run(
+  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+  {
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: message },
+    ],
+  },
+  {
+    gateway: {
+      id: 'cf-gateway', // Replace with your actual Gateway ID
+      skipCache: true   // Optional: disables response caching
+    }
+  }
+);
 ```
 
-- Add your API Key in `.dev.vars`
-
-```env
-AI_GATEWAY_API_KEY=your-api-key
-```
-
-- Update your handler to make a fetch request to AI gateway endpoint(OpenAI/ Anthropic)
-
-4. Test both routes and compare local model vs external model.
+> 🧠 This tells Workers AI to route the request through your Gateway — enabling usage tracking, rate limiting, caching, and model provider control.
