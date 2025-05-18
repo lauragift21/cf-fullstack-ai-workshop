@@ -27,8 +27,8 @@ Ensure your wrangler.toml includes the static assets section:
 
 ```json
 "assets": {
-	"directory": "./public",
-	"binding": "ASSETS",
+  "directory": "./public",
+  "binding": "ASSETS",
 }
 ```
 This tells Cloudflare Workers to bind your ./public folder to the ASSETS binding.

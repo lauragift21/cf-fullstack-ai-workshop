@@ -16,9 +16,9 @@ Add the `[ai]` binding if it's not already there:
 
 ```json
 {
-	"ai": {
-		"binding": "AI"
-	}
+  "ai": {
+    "binding": "AI"
+  }
 }
 ```
 
@@ -58,28 +58,28 @@ In `public/app.js`, update your form handler:
 
 ```ts
 chatForm.addEventListener('submit', async (e) => {
-	e.preventDefault();
-	const message = userInput.value.trim();
-	if (!message) return;
+  e.preventDefault();
+  const message = userInput.value.trim();
+  if (!message) return;
 
-	addMessage(message, 'user');
-	userInput.value = '';
+  addMessage(message, 'user');
+  userInput.value = '';
 
-	const typingEl = addMessage('Assistant is thinking...', 'assistant', true);
+  const typingEl = addMessage('Assistant is thinking...', 'assistant', true);
 
-	try {
-		const response = await fetch('/api/chat', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ message }),
-		});
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message }),
+    });
 
-		const data = await response.json();
-		typingEl.textContent = data.message;
-	} catch (err) {
-		console.error(err);
-		typingEl.textContent = '⚠️ Error generating response.';
-	}
+    const data = await response.json();
+    typingEl.textContent = data.message;
+  } catch (err) {
+    console.error(err);
+    typingEl.textContent = '⚠️ Error generating response.';
+  }
 });
 ```
 
