@@ -1,6 +1,6 @@
 # 🧠 KnowledgeBase Assistant: Full-Stack AI App with Cloudflare
 
-A hands-on workshop on building a Retrieval-Augmented Generation (RAG) application using Cloudflare Workers, Vectorize, D1, and Workers AI.
+A hands-on workshop on building a Retrieval-Augmented Generation (RAG) application using Cloudflare Workers, Vectorize, D1, Workflows and Workers AI.
 
 ---
 
@@ -12,9 +12,8 @@ Through this hands-on project, you will:
 - Add AI capabilities with Workers AI and AI Gateway
 - Embed and search documents using Vectorize
 - Store and retrieve metadata using D1
+- Use Cloudflare Workflows to handle document processing and embedding
 - Build a working Retrieval-Augmented Generation (RAG) app from scratch
-
-🖼️ Slides – [Link to your workshop slides] (optional)
 
 ---
 
@@ -47,14 +46,6 @@ Start the dev server:
 
 ```bash
 wrangler dev
-```
-
-## 🔐 Environment Variables
-
-Create a `.dev.vars` file for local development:
-
-```env
-AI_GATEWAY_API_KEY=your-openai-or-anthropic-key
 ```
 
 ## 📦 Deployment
