@@ -1,16 +1,14 @@
-# 🚀 Part 5: Bonus Enhancements
+# 🧠 Part 5: Build the RAG Chat Endpoint
 
 ## ✅ Goals
-- Add extra capabilities to your RAG app
+- Embed the user’s question using Workers AI
 
-## 🛠️ Optional Add-Ons
+- Query Vectorize for the most relevant content
 
-2. **Add caching with Workers KV:**
-Store frequent queries and LLM responses to speed up retrieval.
+- Retrieve metadata from D1
 
-3. **Deploy to production:**
-Set a custom domain and push the app live.
+- Construct a context-rich prompt for the model
 
-4. **Use Cloudflare Pages (optional):**
-Build a simple frontend to query your RAG API.
+- Return the AI-generated response
 
+## 🛠️ Instructions

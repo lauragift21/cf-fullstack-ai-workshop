@@ -23,19 +23,19 @@ npm install
 
 ### 3. **Run the app locally:**
 ```bash
-wrangler dev
+npx wrangler dev
 ```
 > This runs your Worker in a local dev environment and watches for changes.
 
 ### 4. **Deploy your app:**
 ```bash
-wrangler deploy
+npx wrangler deploy
 ```
 
-### 5. **Explore the project structure and `wrangler.toml` config**
+### 5. **Explore the project structure and `wrangler.jsonc` config**
 
-- Look through the src/index.ts file to understand how routing works with Hono
+- Look through the `src/index.ts` file to understand how routing works with Hono
 
-- Review wrangler.toml to see how environment bindings (like AI, D1, Vectorize) are configured
+- Review `wrangler.jsonc` to see how environment bindings (like AI, D1, Vectorize) are configured
 
-- Check the public/ folder for frontend assets (HTML, CSS, JS)
+- Check the `public/` folder for frontend assets (HTML, CSS, JS)

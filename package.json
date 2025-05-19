@@ -1,4 +1,4 @@
- {
+{
 	"name": "cf-fullstack-ai-workshop",
 	"version": "0.0.0",
 	"private": true,
@@ -17,6 +17,8 @@
 		"wrangler": "^4.14.2"
 	},
 	"dependencies": {
-		"hono": "^4.7.10"
+		"@langchain/textsplitters": "^0.1.0",
+		"hono": "^4.7.10",
+		"nanoid": "^5.1.5"
 	}
 }

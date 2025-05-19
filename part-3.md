@@ -10,9 +10,9 @@
 
 ## 🛠️ Instructions
 
-### 1. **Update wrangler.toml to enable Workers AI**
+### 1. **Update wrangler.jsonc to enable Workers AI**
 
-Add the `[ai]` binding if it's not already there:
+Add the `ai` binding if it's not already there:
 
 ```json
 {

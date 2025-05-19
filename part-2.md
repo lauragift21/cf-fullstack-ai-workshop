@@ -22,8 +22,8 @@ const app = new Hono();
 export default app;
 ```
 
-### 3. **Update wrangler.toml**
-Ensure your wrangler.toml includes the static assets section:
+### 3. **Update wrangler.jsonc**
+Ensure your wrangler.jsonc includes the static assets section:
 
 ```json
 "assets": {
