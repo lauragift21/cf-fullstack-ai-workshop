@@ -27,6 +27,8 @@ This makes `c.env.AI` available in your Worker.
 Update your Hono app to include a simple /api/chat route:
 
 ```ts
+const app = new Hono<{ Bindings: Env }>();
+
 app.post('/api/chat', async (c) => {
   const ai = c.env.AI;
   const { message } = await c.req.json();
@@ -55,6 +57,7 @@ In `public/app.js`, update your form handler:
 chatForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const message = userInput.value.trim();
+
   if (!message) return;
 
   addMessage(message, 'user');
@@ -63,17 +66,24 @@ chatForm.addEventListener('submit', async (e) => {
   const typingEl = addMessage('Assistant is thinking...', 'assistant', true);
 
   try {
+    // Send to backend
     const response = await fetch('/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ message }),
     });
 
+    if (!response.ok) throw new Error('Failed to get response');
+
     const data = await response.json();
+
     typingEl.textContent = data.message;
-  } catch (err) {
-    console.error(err);
-    typingEl.textContent = '⚠️ Error generating response.';
+  } catch (error) {
+    typingEl.textContent = 'Failed to get a response. Please try again.';
+    console.error('Error:', error);
+    addMessage('Sorry, there was an error processing your request.', 'assistant');
   }
 });
 ```

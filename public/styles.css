@@ -1,9 +1,5 @@
 body {
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
+  font-family: 'Outfit', sans-serif;
   margin: 0;
   padding: 0;
   color: #333;
@@ -63,6 +59,9 @@ header {
   border-radius: 18px;
   max-width: 70%;
   word-break: break-word;
+  line-height: 1.6;
+  font-size: 1rem;
+  padding: 1rem 1.25rem;
 }
 
 .user-message {
@@ -112,4 +111,15 @@ button {
 
 button:hover {
   background-color: #ea6e05;
+	transform: scale(1.02);
+	transition: 0.2s ease;
+}
+
+input,
+button {
+	font-size: 1rem;
+}
+
+input:focus {
+	outline: 2px solid #3b82f6;
 }
