@@ -50,8 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const data = await response.json();
 
-			typingEl.innerHTML = marked.parse(data.message);
-
+      typingEl.innerHTML = marked.parse(data.message);
     } catch (error) {
       typingEl.innerHTML = '❌ Failed to get a response. Please try again.';
       console.error('Error:', error);
@@ -59,14 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-
-	function addMessage(content, sender, returnEl = false) {
-		const messageDiv = document.createElement('div');
-		messageDiv.classList.add('message', `${sender}-message`);
-		messageDiv.innerHTML = marked.parse(content);
-		chatMessages.appendChild(messageDiv);
-		chatMessages.scrollTop = chatMessages.scrollHeight;
-		return returnEl ? messageDiv : null;
-	}
-
+  function addMessage(content, sender, returnEl = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message', `${sender}-message`);
+    messageDiv.innerHTML = marked.parse(content);
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return returnEl ? messageDiv : null;
+  }
 });

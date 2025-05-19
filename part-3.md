@@ -79,7 +79,7 @@ chatForm.addEventListener('submit', async (e) => {
 
     const data = await response.json();
 
-		typingEl.innerHTML = marked.parse(data.message);
+    typingEl.innerHTML = marked.parse(data.message);
   } catch (error) {
     typingEl.innerHTML = 'Failed to get a response. Please try again.';
     console.error('Error:', error);

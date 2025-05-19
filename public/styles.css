@@ -111,15 +111,15 @@ button {
 
 button:hover {
   background-color: #ea6e05;
-	transform: scale(1.02);
-	transition: 0.2s ease;
+  transform: scale(1.02);
+  transition: 0.2s ease;
 }
 
 input,
 button {
-	font-size: 1rem;
+  font-size: 1rem;
 }
 
 input:focus {
-	outline: 2px solid #3b82f6;
+  outline: 2px solid #3b82f6;
 }
