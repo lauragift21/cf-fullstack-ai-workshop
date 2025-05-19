@@ -16,7 +16,7 @@ Add the `ai` binding if it's not already there:
 
 ```json
 "ai": {
-	"binding": "AI"
+  "binding": "AI"
 }
 ```
 
