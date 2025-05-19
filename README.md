@@ -71,8 +71,9 @@ wrangler deploy
 - [🧱 Part 1: Cloudflare Workers Basics](./part-1.md)
 - [🔗 Part 2: Integrating Hono Framework](./part-2.md)
 - [🧠 Part 3: Add AI Capabilities](./part-3.md)
-- [🔍 Part 4: Build a RAG Pipeline](./part-4.md)
-- [🚀 Part 5: Bonus Enhancements](./part-5.md)
+- [📄 Part 4: Uploading Documents & Automating with Workflows](./part-4.md)
+- [🧠 Part 5: Build the RAG Chat Endpoint](./part-5.md)
+- [🚀 Part 6: Extra Enhancements](./part-6.md)
 
 ---
 
