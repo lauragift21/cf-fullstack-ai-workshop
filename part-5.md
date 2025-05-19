@@ -1,4 +1,4 @@
-# 🧠 Part 5: Build the RAG Chat Endpoint
+# 💬 Part 5: Build the RAG Chat Endpoint
 
 ## ✅ Goals
 - Embed the user’s question using Workers AI
