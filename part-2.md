@@ -1,17 +1,20 @@
 # 🔗 Part 2: Integrating Hono Framework
 
 ## ✅ Goals
+
 - Add the Hono routing framework to simplify route handling
 - Serve static files from a `public/` directory
 
 ## 🛠️ Instructions
 
 ### 1. **Install Hono**
+
 ```bash
 npm install hono
 ```
 
 ### 2. **Update `src/index.ts`**
+
 Replace your existing handler with this Hono app setup:
 
 ```ts
@@ -23,6 +26,7 @@ export default app;
 ```
 
 ### 3. **Update wrangler.jsonc**
+
 Ensure your wrangler.jsonc includes the static assets section:
 
 ```json
@@ -31,9 +35,11 @@ Ensure your wrangler.jsonc includes the static assets section:
   "binding": "ASSETS",
 }
 ```
+
 This tells Cloudflare Workers to bind your ./public folder to the ASSETS binding.
 
 ### 4. **Run the app locally and test:**
+
 ```bash
 npm run dev
 ```

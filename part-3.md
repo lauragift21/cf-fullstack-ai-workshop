@@ -34,15 +34,12 @@ app.post('/api/chat', async (c) => {
   const { message } = await c.req.json();
 
   try {
-    const response = await ai.run(
-      '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
-      {
-        messages: [
-          { role: 'system', content: 'You are a helpful assistant.' },
-          { role: 'user', content: message },
-        ],
-      }
-    );
+    const response = await ai.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        { role: 'user', content: message },
+      ],
+    });
 
     return c.json({ message: response.response });
   } catch (error) {
@@ -102,10 +99,10 @@ const response = await ai.run(
   },
   {
     gateway: {
-      id: 'cf-gateway',       // Replace with your Gateway ID
-      skipCache: true         // Optional: disables caching
-    }
-  }
+      id: 'cf-gateway', // Replace with your Gateway ID
+      skipCache: true, // Optional: disables caching
+    },
+  },
 );
 ```
 

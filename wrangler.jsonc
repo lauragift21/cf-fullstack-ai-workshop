@@ -3,47 +3,47 @@
  * https://developers.cloudflare.com/workers/wrangler/configuration/
  */
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "cf-fullstack-ai-workshop",
-	"main": "src/index.ts",
-	"compatibility_date": "2025-05-06",
-	"observability": {
-		"enabled": true
-	},
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cf-fullstack-ai-workshop",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-05-06",
+  "observability": {
+    "enabled": true,
+  },
 
-	"vars": {
-		"ENABLE_TEXT_SPLITTING": "true"
-	},
+  "vars": {
+    "ENABLE_TEXT_SPLITTING": "true",
+  },
 
-	"ai": {
-		"binding": "AI"
-	},
+  "ai": {
+    "binding": "AI",
+  },
 
-	"assets": {
-		"directory": "./public",
-		"binding": "ASSETS",
-	},
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+  },
 
-	"d1_databases": [
+  "d1_databases": [
     {
       "binding": "DB",
       "database_name": "knowledgebase-db",
-      "database_id": "87d27ac0-0fb4-4a6b-8ad8-59c8b5b53e55"
-    }
+      "database_id": "87d27ac0-0fb4-4a6b-8ad8-59c8b5b53e55",
+    },
   ],
 
-	"vectorize": [
+  "vectorize": [
     {
       "binding": "VECTORIZE",
-      "index_name": "knowledgebase-vectors"
-    }
+      "index_name": "knowledgebase-vectors",
+    },
   ],
 
-	"workflows": [
+  "workflows": [
     {
       "name": "document-processing",
       "binding": "DOCUMENT_PROCESSING",
-      "class_name": "DocumentProcessingWorkflow"
-    }
-  ]
+      "class_name": "DocumentProcessingWorkflow",
+    },
+  ],
 }

@@ -27,7 +27,7 @@ Through this hands-on project, you will:
 
 ```bash
 npm install -g wrangler
-````
+```
 
 ---
 
@@ -64,6 +64,7 @@ Deploy to Cloudflare:
 ```bash
 wrangler deploy
 ```
+
 ---
 
 ## 📦 Workshop Contents
@@ -79,14 +80,13 @@ wrangler deploy
 
 ## 💡 Extra Credit
 
-* Add Workers KV to cache responses
-* Integrate external models (Anthropic/OpenAI)
-* Deploy to a production domain
-
+- Add Workers KV to cache responses
+- Integrate external models (Anthropic/OpenAI)
+- Deploy to a production domain
 
 ## 🧭 Resources
 
-* [Cloudflare AI Docs](https://developers.cloudflare.com/workers-ai/)
-* [Vectorize](https://developers.cloudflare.com/vectorize/)
-* [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/)
-* [Cloudflare D1](https://developers.cloudflare.com/d1/)
+- [Cloudflare AI Docs](https://developers.cloudflare.com/workers-ai/)
+- [Vectorize](https://developers.cloudflare.com/vectorize/)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/)
+- [Cloudflare D1](https://developers.cloudflare.com/d1/)

@@ -1,6 +1,7 @@
 # 📄 Part 4: Uploading Documents & Automating with Workflows
 
 ## ✅ Goals
+
 - Accept document uploads from users
 - Store metadata and content in D1
 - Generate and store embeddings using Vectorize
@@ -14,6 +15,7 @@
 npx wrangler d1 create knowledgebase-db
 npx wrangler vectorize create knowledgebase-vectors --dimensions=768 --metric=cosine
 ```
+
 Then add the following in your `wrangler.jsonc` file:
 
 ```json
@@ -66,11 +68,6 @@ npx wrangler d1 execute knowledgebase-db --file=./schema.sql
 
 > We will use Workflows to decouple document processing (e.g., chunking + embedding) from the upload request.
 
-
-
-
 ### 4. **Update `/api/documents` to call the Workflow**
-
-
 
 ### 5. **Workflow Script to Process & Embed Document**
