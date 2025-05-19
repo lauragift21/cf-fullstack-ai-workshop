@@ -79,9 +79,9 @@ chatForm.addEventListener('submit', async (e) => {
 
     const data = await response.json();
 
-    typingEl.textContent = data.message;
+		typingEl.innerHTML = marked.parse(data.message);
   } catch (error) {
-    typingEl.textContent = 'Failed to get a response. Please try again.';
+    typingEl.innerHTML = 'Failed to get a response. Please try again.';
     console.error('Error:', error);
     addMessage('Sorry, there was an error processing your request.', 'assistant');
   }

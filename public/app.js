@@ -32,15 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!message) return;
 
-    // Display user message
     addMessage(message, 'user');
     userInput.value = '';
 
-    // Show typing indicator
     const typingEl = addMessage('Assistant is thinking...', 'assistant', true);
 
     try {
-      // Send to backend
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -56,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			typingEl.innerHTML = marked.parse(data.message);
 
     } catch (error) {
-      typingEl.textContent = '❌ Failed to get a response. Please try again.';
+      typingEl.innerHTML = '❌ Failed to get a response. Please try again.';
       console.error('Error:', error);
       addMessage('Sorry, there was an error processing your request.', 'assistant');
     }
