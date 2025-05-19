@@ -79,10 +79,10 @@ chatForm.addEventListener('submit', async (e) => {
     });
 
     const data = await res.json();
-    loading.textContent = data.message;
+    loading.innerHTML = marked.parse(data.message);
   } catch (err) {
     console.error(err);
-    loading.textContent = 'Error retrieving response.';
+    loading.innerHTML = 'Error retrieving response.';
   }
 });
 ```
