@@ -39,8 +39,6 @@ npx wrangler deploy
 
 ### 5. **Explore the project structure and `wrangler.jsonc` config**
 
-- Look through the `src/index.ts` file to understand how routing works with Hono
-
 - Review `wrangler.jsonc` to see how environment bindings (like AI, D1, Vectorize) are configured
 
 - Check the `public/` folder for frontend assets (HTML, CSS, JS)
