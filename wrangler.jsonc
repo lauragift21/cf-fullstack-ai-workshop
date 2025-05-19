@@ -10,40 +10,4 @@
   "observability": {
     "enabled": true,
   },
-
-  "vars": {
-    "ENABLE_TEXT_SPLITTING": "true",
-  },
-
-  "ai": {
-    "binding": "AI",
-  },
-
-  "assets": {
-    "directory": "./public",
-    "binding": "ASSETS",
-  },
-
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "knowledgebase-db",
-      "database_id": "87d27ac0-0fb4-4a6b-8ad8-59c8b5b53e55",
-    },
-  ],
-
-  "vectorize": [
-    {
-      "binding": "VECTORIZE",
-      "index_name": "knowledgebase-vectors",
-    },
-  ],
-
-  "workflows": [
-    {
-      "name": "document-processing",
-      "binding": "DOCUMENT_PROCESSING",
-      "class_name": "DocumentProcessingWorkflow",
-    },
-  ],
 }
