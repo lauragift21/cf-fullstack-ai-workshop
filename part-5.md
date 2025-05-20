@@ -41,9 +41,18 @@ app.post('/api/chat', async (c) => {
       { role: 'user', content: question },
     ];
 
-    const aiResponse = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
-      messages: prompt,
-    });
+    const aiResponse = await env.AI.run(
+      '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+      {
+        messages: prompt,
+      },
+      {
+        gateway: {
+          id: 'cf-gateway', // Replace with your Gateway ID
+          skipCache: true, // Optional: disables caching
+        },
+      },
+    );
 
     return c.json({
       message: aiResponse.response,
