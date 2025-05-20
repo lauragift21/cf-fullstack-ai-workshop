@@ -216,16 +216,6 @@ app.post('/api/documents', async (c) => {
 
 #### Creating the Workflow
 
-When a document is uploaded, this workflow:
-
-Splits the content into smaller text chunks using LangChain
-
-Inserts each chunk into your D1 database
-
-Generates an embedding (vector) for each chunk using Workers AI
-
-Stores the embedding in Cloudflare Vectorize for future search
-
 ```ts
 import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
@@ -298,3 +288,13 @@ export class DocumentProcessingWorkflow extends WorkflowEntrypoint<Env, Params> 
   }
 }
 ```
+When a document is uploaded, the workflow:
+
+* Splits the content into smaller text chunks using LangChain
+
+* Inserts each chunk into your D1 database
+
+* Generates an embedding (vector) for each chunk using Workers AI
+
+* Stores the embedding in Cloudflare Vectorize for future search
+
