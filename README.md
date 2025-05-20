@@ -6,7 +6,7 @@ A hands-on workshop on building a Retrieval-Augmented Generation (RAG) applicati
 
 In this workshop, you’ll build a **KnowledgeBase Assistant** — a RAG-powered AI app that lets users upload content, ask questions about it, and receive context-aware answers grounded in their own documents.
 
-Through this hands-on project, you will:
+In this hands-on project, you will:
 
 - Create and deploy a Cloudflare Worker
 - Add AI capabilities with Workers AI and AI Gateway
