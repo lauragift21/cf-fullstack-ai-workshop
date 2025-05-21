@@ -27,10 +27,6 @@ This makes `c.env.AI` available in your Worker.
 Update your Hono app to include a simple `/api/chat` route:
 
 ```ts
-interface Env {
-  AI: Ai;
-}
-
 const app = new Hono<{ Bindings: Env }>();
 
 app.post('/api/chat', async (c) => {
