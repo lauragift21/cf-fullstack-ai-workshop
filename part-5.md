@@ -9,9 +9,9 @@
 
 ## 🛠️ Instructions
 
-### 1. Implement `/api/chat` endpoint
+### 1. Implement the `/api/chat` endpoint
 
-In your `index.ts`, replace your existing basic chat route with this full RAG-enabled logic:
+In your `index.ts`, replace your existing chat route with the following RAG-enabled logic:
 
 ```ts
 app.post('/api/chat', async (c) => {
@@ -19,19 +19,23 @@ app.post('/api/chat', async (c) => {
   const { question } = await c.req.json();
 
   try {
+    // Step 1: Embed the user question
     const embeddingResponse = await env.AI.run('@cf/baai/bge-base-en-v1.5', {
       text: question,
     });
     const queryEmbedding = embeddingResponse.data[0];
 
+    // Step 2: Query Vectorize for relevant context
     const vectorResult = await env.VECTORIZE.query(queryEmbedding, {
       topK: 3,
       returnValues: true,
+      returnMetadata: 'all',
     });
 
     const matches = vectorResult.matches || [];
     const contextChunks = matches.map((m) => m.metadata?.text).filter(Boolean);
 
+    // Step 3: Format context for the AI model
     const contextBlock = contextChunks.length
       ? `Context:\n${contextChunks.map((chunk) => `- ${chunk}`).join('\n')}`
       : 'No relevant context found.';
@@ -41,7 +45,8 @@ app.post('/api/chat', async (c) => {
       { role: 'user', content: question },
     ];
 
-    const aiResponse = await env.AI.run(
+    // Step 4: Generate AI response
+    const response = await env.AI.run(
       '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
       {
         messages: prompt,
@@ -49,13 +54,13 @@ app.post('/api/chat', async (c) => {
       {
         gateway: {
           id: 'cf-gateway', // Replace with your Gateway ID
-          skipCache: true, // Optional: disables caching
+          skipCache: true,
         },
       },
     );
 
     return c.json({
-      message: aiResponse.response,
+      message: response
       context: contextChunks,
     });
   } catch (err) {
@@ -65,47 +70,20 @@ app.post('/api/chat', async (c) => {
 });
 ```
 
-### 2. Update Frontend Chat Logic
+Then deploy your Worker:
 
-In `public/app.js`, you already have a form handler. Enhance it with loading feedback and display:
-
-```js
-chatForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const question = userInput.value.trim();
-  if (!question) return;
-
-  addMessage(question, 'user');
-  userInput.value = '';
-
-  const loading = addMessage('Thinking...', 'assistant', true);
-
-  try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question }),
-    });
-
-    const data = await res.json();
-    loading.innerHTML = marked.parse(data.message);
-  } catch (err) {
-    console.error(err);
-    loading.innerHTML = 'Error retrieving response.';
-  }
-});
+```bash
+npm run deploy
 ```
 
-### ✅ Summary
+## ✅ Summary
 
-By now, you’ve built a full-stack RAG chat system:
+You’ve now built a full-stack RAG (Retrieval-Augmented Generation) chat system:
 
-- User sends a question
+- 💬 Users send a question
+- 🧠 It’s embedded and matched against your vector store
+- 🔍 Relevant content is retrieved and passed into the AI model
+- 🤖 The AI generates a grounded response
+- 🌐 The frontend receives the answer + matched context
 
-- It’s embedded and matched against your vector store
-
-- AI uses matched context to generate a response
-
-- Response is returned and rendered in the UI
-
-All powered by Cloudflare Workers, Vectorize, and Workers AI.
+All powered by Cloudflare Workers, Vectorize, Workflows, and Workers AI.

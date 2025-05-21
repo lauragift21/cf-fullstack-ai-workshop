@@ -28,11 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle chat interactions
   chatForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const message = userInput.value.trim();
+    const question = userInput.value.trim();
 
-    if (!message) return;
+    if (!question) return;
 
-    addMessage(message, 'user');
+    addMessage(question, 'user');
     userInput.value = '';
 
     const typingEl = addMessage('Assistant is thinking...', 'assistant', true);
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ question }),
       });
 
       if (!res.ok) {
@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const data = await res.json();
       const response = data.message?.response || 'No response received.';
+
       typingEl.innerHTML = marked.parse(response);
     } catch (error) {
       console.error('Chat error:', error);

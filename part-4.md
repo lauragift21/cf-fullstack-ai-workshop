@@ -51,8 +51,8 @@ Then run this to apply the schema:
 ```bash
 npx wrangler d1 execute knowledgebase-db --file=./schema.sql
 ```
- > To apply it to your remote database instead of local, add the --remote flag.
 
+> To apply it to your remote database instead of local, add the --remote flag.
 
 #### Add Bindings to `wrangler.jsonc`
 
@@ -200,6 +200,7 @@ First, install the required libraries:
 ```bash
 npm i @langchain/textsplitters nanoid
 ```
+
 Then implement the processing steps:
 
 ```ts
@@ -217,6 +218,8 @@ type Document = {
 type Params = {
   content: string;
 };
+
+// ...
 
 export class DocumentProcessingWorkflow extends WorkflowEntrypoint<Env, Params> {
   async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
