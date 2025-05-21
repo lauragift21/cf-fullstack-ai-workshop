@@ -36,7 +36,7 @@ Ensure your wrangler.jsonc includes the static assets section:
 }
 ```
 
-This tells Cloudflare Workers to bind your ./public folder to the ASSETS binding. After adding a binding to `wrangler.jsonc` you can run `npm run cf-typegen` to generate types for your bindings.
+This tells Cloudflare Workers to bind your`./public` folder to the `ASSETS` binding. After adding a binding to `wrangler.jsonc` you can run `npm run cf-typegen` to generate types for your bindings.
 
 ### 4. **Run the app locally and test:**
 

@@ -81,13 +81,6 @@ Update your config file with the necessary D1 and Vectorize bindings:
 This route handles document uploads and saves them in your D1 database:
 
 ```ts
-type Document = {
-  id: string;
-  title: string;
-  content: string;
-  created_at: number;
-};
-
 app.post('/api/documents', async (c) => {
   const formData = await c.req.formData();
   const file = formData.get('document');
@@ -166,7 +159,7 @@ uploadForm.addEventListener('submit', async (e) => {
 });
 ```
 
-You can check the file ypu uploaded with the following command:
+You can check the file you uploaded with the following command:
 
 ```bash
 npx wrangler d1 execute knowledgebase-db --command="SELECT * FROM documents;" --json
@@ -214,10 +207,20 @@ import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from 'cloudflare:work
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { nanoid } from 'nanoid';
 
+type Document = {
+  id: string;
+  title: string;
+  content: string;
+  created_at: number;
+};
+
+type Params = {
+  content: string;
+};
+
 export class DocumentProcessingWorkflow extends WorkflowEntrypoint<Env, Params> {
   async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
     const { content } = event.payload;
-    console.log(content);
     const env = this.env;
 
     // Step 1: Split content into chunks
@@ -297,10 +300,6 @@ When a document is uploaded, the workflow:
 Replace the logic in your `/api/documents` route to start the workflow instead of inserting directly into D1:
 
 ```ts
-type Params = {
-  content: string;
-};
-
 app.post('/api/documents', async (c) => {
   const formData = await c.req.formData();
   const file = formData.get('document');
