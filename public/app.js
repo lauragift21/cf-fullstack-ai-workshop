@@ -15,14 +15,44 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Simple document listing for now
-    Array.from(fileInput.files).forEach((file) => {
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append('document', file);
+    formData.append('title', file.name);
+
+    // Show upload status
+    const statusElem = document.createElement('div');
+    statusElem.textContent = `Uploading ${file.name}...`;
+    statusElem.classList.add('upload-status');
+    uploadForm.appendChild(statusElem);
+
+    try {
+      const response = await fetch('/api/documents', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Upload failed');
+
+      const result = await response.json();
+
+      // Update status
+      statusElem.textContent = `✓ ${file.name} uploaded successfully!`;
+      statusElem.classList.add('success');
+
+      // Add to documents list
       const listItem = document.createElement('li');
       listItem.textContent = file.name;
+      listItem.dataset.documentId = result.documentId;
       documentsList.appendChild(listItem);
-    });
 
-    // We'll implement actual upload in future steps
+      // Reset file input
+      fileInput.value = '';
+    } catch (error) {
+      console.error('Upload error:', error);
+      statusElem.textContent = `✗ Failed to upload ${file.name}`;
+      statusElem.classList.add('error');
+    }
   });
 
   // Handle chat interactions
@@ -43,11 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question }),
       });
-
       if (!res.ok) {
         throw new Error(`Request failed with status ${res.status}`);
       }
-
       const data = await res.json();
       const response = data.message?.response || 'No response received.';
 
@@ -64,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     messageDiv.innerHTML = marked.parse(content);
     chatMessages.appendChild(messageDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+
     return returnEl ? messageDiv : null;
   }
 });
