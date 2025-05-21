@@ -38,23 +38,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const typingEl = addMessage('Assistant is thinking...', 'assistant', true);
 
     try {
-      const response = await fetch('/api/chat', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message }),
       });
 
-      if (!response.ok) throw new Error('Failed to get response');
+      if (!res.ok) {
+        throw new Error(`Request failed with status ${res.status}`);
+      }
 
-      const data = await response.json();
-
-      typingEl.innerHTML = marked.parse(data.message);
+      const data = await res.json();
+      const response = data.message?.response || 'No response received.';
+      typingEl.innerHTML = marked.parse(response);
     } catch (error) {
-      typingEl.innerHTML = '❌ Failed to get a response. Please try again.';
-      console.error('Error:', error);
-      addMessage('Sorry, there was an error processing your request.', 'assistant');
+      console.error('Chat error:', error);
+      typingEl.innerHTML = 'Failed to get a response. Please try again.';
     }
   });
 
