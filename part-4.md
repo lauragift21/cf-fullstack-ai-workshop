@@ -28,7 +28,7 @@ This returns a `database_id` — you’ll need it in your config.
 #### Create a Vectorize Index
 
 ```bash
-npx wrangler vectorize create knowledgebase-vectors --remote --dimensions=768 --metric=cosine
+npx wrangler vectorize create knowledgebase-vectors --dimensions=768 --metric=cosine
 ```
 
 #### Add D1 Schema
