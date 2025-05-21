@@ -98,8 +98,14 @@ chatForm.addEventListener('submit', async (e) => {
 
 ### ✅ Summary
 
-By the end of this part:
+By now, you’ve built a full-stack RAG chat system:
 
-- You’ve built a working full-stack RAG system
-- User input → embedded → relevant chunks retrieved → AI-generated answer
-- All served from your Cloudflare Worker
+- User sends a question
+
+- It’s embedded and matched against your vector store
+
+- AI uses matched context to generate a response
+
+- Response is returned and rendered in the UI
+
+All powered by Cloudflare Workers, Vectorize, and Workers AI.

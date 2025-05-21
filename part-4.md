@@ -2,9 +2,11 @@
 
 ## ✅ Goals
 
-- Set up D1 and Vectorize
-- Upload documents from the frontend
-- Trigger a Cloudflare Workflow to:
+In this section, we will:
+
+- Set up Cloudflare D1 and Vectorize
+- Enable file uploads from the frontend
+- Trigger a Cloudflare Workflow that:
 
   - Chunk the content using LangChain
   - Store each chunk in D1
@@ -26,12 +28,12 @@ This returns a `database_id` — you’ll need it in your config.
 #### Create a Vectorize Index
 
 ```bash
-npx wrangler vectorize create knowledgebase-vectors --dimensions=768 --metric=cosine
+npx wrangler vectorize create knowledgebase-vectors --remote --dimensions=768 --metric=cosine
 ```
 
 #### Add D1 Schema
 
-Create a file called `schema.sql` in the root directory of your project:
+Create a `schema.sql` file in your project root:
 
 ```sql
 DROP TABLE IF EXISTS documents;
@@ -49,10 +51,12 @@ Then run this to apply the schema:
 ```bash
 npx wrangler d1 execute knowledgebase-db --file=./schema.sql
 ```
+ > To apply it to your remote database instead of local, add the --remote flag.
 
-#### Update `wrangler.jsonc` with Bindings
 
-Make sure the following bindings exist in your config:
+#### Add Bindings to `wrangler.jsonc`
+
+Update your config file with the necessary D1 and Vectorize bindings:
 
 ```jsonc
 {
@@ -72,7 +76,9 @@ Make sure the following bindings exist in your config:
 }
 ```
 
-### 2. Add Basic Upload Endpoint
+### 2. Add an Upload Endpoint
+
+This route handles document uploads and saves them in your D1 database:
 
 ```ts
 type Document = {
@@ -105,7 +111,9 @@ app.post('/api/documents', async (c) => {
 });
 ```
 
-### 3. Update the upload Form in the UI
+### 3. Update the Frontend Upload Form
+
+Add JavaScript to handle document uploads on the frontend:
 
 ```js
 uploadForm.addEventListener('submit', async (e) => {
@@ -158,11 +166,17 @@ uploadForm.addEventListener('submit', async (e) => {
 });
 ```
 
+You can check the file ypu uploaded with the following command:
+
+```bash
+npx wrangler d1 execute knowledgebase-db --command="SELECT * FROM documents;" --json
+```
+
 ### 4. Implement the Document Processing Workflow
 
 In this step, we will introduce a [Cloudflare Workflow](https://developers.cloudflare.com/workflows/). This will allow us to define a durable workflow that can safely and robustly execute all the steps of the RAG process.
 
-#### Update `wrangler.jsonc` for Workflow Binding:
+#### Update `wrangler.jsonc` with the Workflow Binding:
 
 ```jsonc
   "workflows": [
@@ -174,47 +188,26 @@ In this step, we will introduce a [Cloudflare Workflow](https://developers.cloud
   ],
 ```
 
-Dont forget to run `npm run cf-typegen` to generate new types when you add new values to `wrangler.jsonc`.
+> After editing `wrangler.jsonc`, run `npm run cf-typegen` to regenerate types.
 
 In `src/index.ts`, add a new class called `DocumentProcessingWorkflow` that extends `WorkflowEntrypoint`:
 
 ```ts
 import { WorkflowEntrypoint } from 'cloudflare:workers';
 
-export class DocumentProcessingWorkflow extends WorkflowEntrypoint<Env, { content: string }> {
-  async run(event, step) {
-    await step.do('Example step', async () => {
-      console.log('This is an example workflow step');
-    });
-  }
+export class DocumentProcessingWorkflow extends WorkflowEntrypoint<Env, Params> {
+  // ...
 }
 ```
 
-#### Replace Upload Logic to Trigger Workflow
-
-Update the `/api/documents` route to:
-
-```ts
-type Params = {
-  content: string;
-};
-
-app.post('/api/documents', async (c) => {
-  const formData = await c.req.formData();
-  const file = formData.get('document');
-
-  if (!file || typeof file === 'string') {
-    return c.json({ error: 'No file provided' }, 400);
-  }
-
-  const content = await file.text();
-  // Start the document processing workflow
-  await c.env.DOCUMENT_PROCESSING.create({ params: { content } });
-  return c.json({ success: true, message: 'Processing Started' });
-});
-```
-
 #### Creating the Workflow
+
+First, install the required libraries:
+
+```bash
+npm i @langchain/textsplitters nanoid
+```
+Then implement the processing steps:
 
 ```ts
 import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
@@ -288,13 +281,37 @@ export class DocumentProcessingWorkflow extends WorkflowEntrypoint<Env, Params> 
   }
 }
 ```
+
 When a document is uploaded, the workflow:
 
-* Splits the content into smaller text chunks using LangChain
+- Splits the content into smaller text chunks using LangChain
 
-* Inserts each chunk into your D1 database
+- Inserts each chunk into your D1 database
 
-* Generates an embedding (vector) for each chunk using Workers AI
+- Generates an embedding (vector) for each chunk using Workers AI
 
-* Stores the embedding in Cloudflare Vectorize for future search
+- Stores the embedding in Cloudflare Vectorize for future search
 
+#### Update Upload Endpoint to Trigger Workflow
+
+Replace the logic in your `/api/documents` route to start the workflow instead of inserting directly into D1:
+
+```ts
+type Params = {
+  content: string;
+};
+
+app.post('/api/documents', async (c) => {
+  const formData = await c.req.formData();
+  const file = formData.get('document');
+
+  if (!file || typeof file === 'string') {
+    return c.json({ error: 'No file provided' }, 400);
+  }
+
+  const content = await file.text();
+  // Start the document processing workflow
+  await c.env.DOCUMENT_PROCESSING.create({ params: { content } });
+  return c.json({ success: true, message: 'Processing Started' });
+});
+```
