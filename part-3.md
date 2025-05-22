@@ -34,7 +34,7 @@ app.post('/api/chat', async (c) => {
   const { message } = await c.req.json();
 
   try {
-    const response = await ai.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
+    const response = await ai.run('@cf/meta/llama-4-scout-17b-16e-instruct', {
       messages: [
         { role: 'system', content: 'You are a helpful assistant.' },
         { role: 'user', content: message },

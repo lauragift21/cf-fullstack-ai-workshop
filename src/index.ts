@@ -59,7 +59,7 @@ app.post('/api/chat', async (c) => {
     ];
 
     const response = await env.AI.run(
-      '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+      '@cf/meta/llama-4-scout-17b-16e-instruct',
       {
         messages: prompt,
       },
