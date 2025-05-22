@@ -81,3 +81,4 @@ wrangler deploy
 - [Vectorize](https://developers.cloudflare.com/vectorize/)
 - [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/)
 - [Cloudflare D1](https://developers.cloudflare.com/d1/)
+- [Cloudflare Workflows](https://developers.cloudflare.com/workflows/)
