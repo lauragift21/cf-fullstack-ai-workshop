@@ -31,6 +31,28 @@ This returns a `database_id` — you’ll need it in your config.
 npx wrangler vectorize create knowledgebase-vectors --dimensions=768 --metric=cosine
 ```
 
+#### Add Bindings to `wrangler.jsonc`
+
+Update your config file with the necessary D1 and Vectorize bindings:
+
+```jsonc
+{
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "knowledgebase-db",
+      "database_id": "your-database-id",
+    },
+  ],
+  "vectorize": [
+    {
+      "binding": "VECTORIZE",
+      "index_name": "knowledgebase-vectors",
+    },
+  ],
+}
+```
+
 #### Add D1 Schema
 
 Create a `schema.sql` file in your project root:
@@ -53,28 +75,6 @@ npx wrangler d1 execute knowledgebase-db --file=./schema.sql
 ```
 
 > To apply it to your remote database instead of local, add the --remote flag.
-
-#### Add Bindings to `wrangler.jsonc`
-
-Update your config file with the necessary D1 and Vectorize bindings:
-
-```jsonc
-{
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "knowledgebase-db",
-      "database_id": "your-database-id",
-    },
-  ],
-  "vectorize": [
-    {
-      "binding": "VECTORIZE",
-      "index_name": "knowledgebase-vectors",
-    },
-  ],
-}
-```
 
 ### 2. Add an Upload Endpoint
 
